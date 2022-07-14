@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DemoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="practice1">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="phone_number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityContainer Name="DemoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="practice1" EntityType="Self.practice1" />
+    <EntitySet Name="Student_Address_Details" EntityType="DemoModel.Student_Address_Details" />
+    <EntitySet Name="Student_Details" EntityType="DemoModel.Student_Details" />
+    <AssociationSet Name="FK_Student_Address_Details_Student_Details" Association="DemoModel.FK_Student_Address_Details_Student_Details">
+      <End Role="Student_Details" EntitySet="Student_Details" />
+      <End Role="Student_Address_Details" EntitySet="Student_Address_Details" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Student_Address_Details">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" />
+    <Property Name="Appartment_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Street_Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Zipcode" Type="Int32" />
+    <NavigationProperty Name="Student_Details" Relationship="DemoModel.FK_Student_Address_Details_Student_Details" FromRole="Student_Address_Details" ToRole="Student_Details" />
+  </EntityType>
+  <EntityType Name="Student_Details">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DOB" Type="DateTime" Precision="0" />
+    <Property Name="Phone_number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Student_Address_Details" Relationship="DemoModel.FK_Student_Address_Details_Student_Details" FromRole="Student_Details" ToRole="Student_Address_Details" />
+  </EntityType>
+  <Association Name="FK_Student_Address_Details_Student_Details">
+    <End Type="DemoModel.Student_Details" Role="Student_Details" Multiplicity="1" />
+    <End Type="DemoModel.Student_Address_Details" Role="Student_Address_Details" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Student_Details">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Student_Address_Details">
+        <PropertyRef Name="id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

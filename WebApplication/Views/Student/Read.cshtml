@@ -1,0 +1,55 @@
+﻿@model IEnumerable<WebApplication.Models.Student_Details>
+@{
+    ViewBag.Title = "Read";
+}
+
+<h2>Read</h2>
+<html>
+    
+    <body>
+        <h3>Student Detail </h3>
+        <table class="table table-bordered table-responsive table-condensed">
+            <thead>
+                <tr class="btn-primary">
+                    <th>Student Id</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>DOB</th>
+                    <th>Phone Number</th>
+                    <th>Appartment Number</th>
+                    <th>Street Address</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Zip code</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        @*<td>@Html.DisplayFor(a => item.name)</td>*@
+                        <td>@item.id</td>
+                        <td>@item.First_Name</td>
+                        <td>@item.Last_Name</td>
+                        <td>@item.Email</td>
+                        <td>@Convert.ToDateTime(item.DOB).ToShortDateString()</td>
+                        <td>@item.Phone_number</td>
+                        <td>@item.Student_Address_Details.Appartment_Number</td>
+                        <td>@item.Student_Address_Details.Street_Address</td>
+                        <td>@item.Student_Address_Details.City</td>
+                        <td>@item.Student_Address_Details.State</td>
+                        <td>@item.Student_Address_Details.Zipcode</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                        </td>
+                    </tr>
+                }
+                @Html.ActionLink("Create", "Create")
+            </tbody>
+        </table>
+    </body>
+</html>
